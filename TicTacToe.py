@@ -5,14 +5,37 @@ def run_game():
 class TicTacToe:
     board = {}
     turn = 0
+    p1 = {'7': ' ', '8': ' ', '9': ' ',
+          '4': ' ', '5': ' ', '6': ' ',
+          '1': ' ', '2': ' ', '3': ' '}
+    p2 = {'7': ' ', '8': ' ', '9': ' ',
+          '4': ' ', '5': ' ', '6': ' ',
+          '1': ' ', '2': ' ', '3': ' '}
 
     def __init__(self):
         self.board = {'7': ' ', '8': ' ', '9': ' ',
                       '4': ' ', '5': ' ', '6': ' ',
                       '1': ' ', '2': ' ', '3': ' '}
 
-    # todo add check for victory
+    if turn >= 5:
+        if board
 
+    # todo add check for victory
+    # This is too hard for me right now.
+    # def victory_screen(self):
+    #     win = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
+    #     for x in win:
+    #         if sum(x) == 15:
+    #             print("p1 wins")
+    #         elif sum(x) == -15:
+    #             print("p2 wins")
+    #         else:
+    #             print("tie")
+    #     """
+    #      2 7 6
+    #      9 5 1
+    #      4 3 8
+    #     """
     def player_input(self):
         for turn_number in range(1, 10):
             self.turn = turn_number
