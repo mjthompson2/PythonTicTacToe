@@ -30,7 +30,6 @@ class TicTacToe:
             print("Invalid character.")
 
     def simple_cpu(self):
-        selection = random.randint(1,9)
         print(selection)
         while selection not in self.board or self.winner or self.board[selection] != ' ':
             self.assign_space(selection)

@@ -1,10 +1,11 @@
-import sys, random
+import random
 
 
 class TicTacToe:
     board = {}
     turn = 0
     winner = False
+    game_type = ''
 
     def __init__(self):
         self.board = {'7': ' ', '8': ' ', '9': ' ',
@@ -12,8 +13,9 @@ class TicTacToe:
                       '1': ' ', '2': ' ', '3': ' '}
 
     def start_menu(self):
+        in_progress = True
 
-        while self:
+        while in_progress:
             print("Shat would you like to do?")
             print("S = Start game")
             print("E = Exit")
@@ -22,8 +24,9 @@ class TicTacToe:
                 print("Play against CPU or Human?")
                 vs_selection = input()
                 if vs_selection.upper() == "HUMAN":
-                    tic_tac.player_input()
+                    tic_tac.game_loop("human")
                 elif vs_selection.upper() == 'CPU':
+                    tic_tac.game_loop("easy")
                     # print("easy or hard?")
                     # cpu_selection = input()
                     # if cpu_selection.upper() == "EASY":
@@ -33,43 +36,56 @@ class TicTacToe:
                     # else:
                     #     print("not a valid selection")
                     print("ok")
-                    sys.exit()
+                    in_progress = False
                 else:
                     print("Not a valid selection.")
             elif menu_selection.upper() == 'E':
-                sys.exit("Exiting!")
+                in_progress = False
             else:
                 print("Not a valid selection.")
 
-    def player_input(self):
-
-        # for selection in self.board
-        #     random selection 1,10
-        #     check if self.board space = ' '
-        #         if yes, put in space, wait for human player
+    def game_loop(self, game_type):
+        self.game_type = game_type
+        current_player = "human"
 
         for turn_number in range(1, 10):
             self.turn = turn_number
-            self.print_board()
-            print("Enter a position:")
-            selection = input()
-
-            # while until we get a selection in the board
-            while selection not in self.board or self.winner or self.board[selection] != ' ':
-                print("invalid character, please try again.")
-                selection = input()
-
+            if game_type == "human":
+                self.print_board()
+                print("Enter a position:")
+                self.get_selection("human")
             else:
-                self.assign_space(selection)
-                print(self.board)
-                if turn_number >= 5:
-                    self.check_for_winner()
+                if current_player == "human":
+                    self.print_board()
+                    print("Enter a position:")
+                    self.get_selection("human")
+                    current_player = game_type
+                else:
+                    self.get_selection(game_type)
+                    current_player = "human"
+
         if not self.winner:
             print("It's a tie!")
 
-    # def computer_move(self):
-    #     for i in range(1, 10):
-    #         if
+    def get_selection(self, vs_mode):
+        if vs_mode == "human":
+            selection = input()
+        elif vs_mode == "easy":
+            selection = self.easy_cpu()
+        # while until we get a selection in the board
+        while selection not in self.board or self.winner or self.board[selection] != ' ':
+            if vs_mode == "human":
+                print("invalid character, please try again.")
+                selection = input()
+            elif vs_mode == "easy":
+                selection = self.easy_cpu()
+        self.assign_space(selection)
+        print(self.board)
+        if self.turn >= 5:
+            self.check_for_winner()
+
+    def easy_cpu(self):
+        return str(random.randint(1, 9))
 
     def check_for_winner(self):
         win = [['7', '8', '9'], ['4', '5', '6'], ['1', '2', '3'], ['7', '4', '1'], ['8', '5', '2'], ['9', '6', '3'],
